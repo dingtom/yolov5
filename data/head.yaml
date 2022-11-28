@@ -1,0 +1,8 @@
+path: D:\work\data\head  # dataset root dir
+train: train.txt  # train images (relative to 'path')
+val: val.txt # val images (relative to 'path')
+test:  test.txt # test images (optional)
+
+# Classes
+nc: 1  # number of classes
+names: ['head']  # class names
