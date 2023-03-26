@@ -1,0 +1,40 @@
+
+
+path: e:/work/data/VOC  # dataset root dir
+train: test  # train images (relative to 'path')
+val: val # val images (relative to 'path')
+test:  test # test images (optional)
+
+#path: /mnt/d/work/data/head  # dataset root dir
+#train: train_wsl.txt  # train images (relative to 'path')
+#val: val_wsl.txt # val images (relative to 'path')
+#test:  test_wsl.txt # test images (optional)
+
+
+#path: d:/work/data/head  # dataset root dir
+#train: train_wsl.txt  # train images (relative to 'path')
+#val: val_wsl.txt # val images (relative to 'path')
+#test:  test_wsl.txt # test images (optional)
+# Classes
+nc: 20  # number of classes
+names: ['aeroplane',
+        'bicycle',
+        'bird',
+        'boat',
+        'bottle',
+        'bus',
+        'car',
+        'cat',
+        'chair',
+        'cow',
+        'diningtable',
+        'dog',
+        'horse',
+        'motorbike',
+        'person',
+        'pottedplant',
+        'sheep',
+        'sofa',
+        'train',
+        'tvmonitor']
+  # class names
