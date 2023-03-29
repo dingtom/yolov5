@@ -1,15 +1,14 @@
 #first
 python train.py \
---cfg models/mobilenetv3small.yaml \
+--cfg models/swintransformer.yaml \
 --data data/hand.yaml \
---epochs 150 \
---patience 5 \
---batch-size 16 \
+--epochs 100 \
+--batch-size 32 \
 --workers 4 \
---project /content/drive/My Drive/yolov5/mobilenetv3small/train \
---cache
-#--resume
-
-# --project '/content/drive/My Drive/yolov5/mobilenetv3small/train' \
-# --weights 'runs/train/original/last.pt' \
+--project '../drive/MyDrive/yolov5/cbamattention/train' \
+--cache \
+# --patience 10 \
+# --resume \
+# --weights '/content/yolov5/content/drive/MyDrive/mobilenetv3small/train/exp/weights/last.pt' \
+# --weights 'content/drive/My Drive/yolov5/mobilenetv3small/train/exp/last.pt' \
 # -weights '/content/drive/My Drive/yolov5/runs/train/exp3/weights/last.pt'
