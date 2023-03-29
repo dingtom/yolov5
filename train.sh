@@ -6,8 +6,10 @@ python train.py \
 --patience 5 \
 --batch-size 16 \
 --workers 4 \
---project mobilenetv3small/train \
+--project /content/drive/My Drive/yolov5/mobilenetv3small/train \
 --cache
 #--resume
+
+# --project '/content/drive/My Drive/yolov5/mobilenetv3small/train' \
 # --weights 'runs/train/original/last.pt' \
 # -weights '/content/drive/My Drive/yolov5/runs/train/exp3/weights/last.pt'
