@@ -361,6 +361,9 @@ def parse_model(d, ch):  # model_dict, input_channels(3)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    # parser.add_argument('--cfg', type=str, default='mobilenetv3small.yaml', help='model.yaml')
+    # parser.add_argument('--cfg', type=str, default='yolov5s.yaml', help='model.yaml')
+    # parser.add_argument('--cfg', type=str, default='cbamattention.yaml', help='model.yaml')
     parser.add_argument('--cfg', type=str, default='mobilecbam.yaml', help='model.yaml')
     parser.add_argument('--batch-size', type=int, default=1, help='total batch size for all GPUs')
     parser.add_argument('--device', default='cpu', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
