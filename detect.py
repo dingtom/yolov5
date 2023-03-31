@@ -215,11 +215,10 @@ def run(
 
 def parse_opt():
     parser = argparse.ArgumentParser()
-    # parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'runs/train/exp7/weights/best.pt', help='model path or triton URL')
-    parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'yolov5s.pt', help='model path or triton URL')
-    parser.add_argument('--source', type=str, default='e:/work/data/VOC/test/images',
-                        help='file/dir/URL/glob/screen/0(webcam)')
-    parser.add_argument('--data', type=str, default=ROOT / 'data/hand.yaml', help='(optional) dataset.yaml path')
+    # parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'yolov5s.pt', help='model path or triton URL')
+    parser.add_argument('--weights', nargs='+', type=str, default=ROOT / r'runs\train\exp3\weights\best.pt', help='model path or triton URL')
+    parser.add_argument('--source', type=str, default='d:/data/UA-DETRAC-G2/images/val', help='file/dir/URL/glob/screen/0(webcam)')
+    parser.add_argument('--data', type=str, default=ROOT / 'data/car.yaml', help='(optional) dataset.yaml path')
     parser.add_argument('--imgsz', '--img', '--img-size', nargs='+', type=int, default=[640], help='inference size h,w')
     parser.add_argument('--conf-thres', type=float, default=0.25, help='confidence threshold')
     parser.add_argument('--iou-thres', type=float, default=0.45, help='NMS IoU threshold')
@@ -261,3 +260,4 @@ if __name__ == "__main__":
     main(opt)
     end_time = time.time()
     print("程序花费时间{}秒".format(end_time - begin_time))
+
