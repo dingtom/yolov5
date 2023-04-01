@@ -857,7 +857,7 @@ class Classify(nn.Module):
 
 class SEAttention(nn.Module):
 
-    def __init__(self, channel=512,reduction=16):
+    def __init__(self, channel=512, reduction=16):
         super().__init__()
         self.avg_pool = nn.AdaptiveAvgPool2d(1)
         self.fc = nn.Sequential(
@@ -1256,7 +1256,7 @@ class SpatialAttentionModule(nn.Module):
         return out
 
 class CBAM(nn.Module):
-    def __init__(self, c1,c2):
+    def __init__(self, c1, c2):
         super(CBAM, self).__init__()
         self.channel_attention = ChannelAttentionModule(c1)
         self.spatial_attention = SpatialAttentionModule()
