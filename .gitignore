@@ -1,7 +1,7 @@
 # Repo-specific GitIgnore ----------------------------------------------------------------------------------------------
-*.jpg
-*.jpeg
-*.png
+# *.jpg
+# *.jpeg
+# *.png
 *.bmp
 *.tif
 *.tiff
@@ -13,7 +13,7 @@
 *.TIF
 *.TIFF
 *.HEIC
-*.mp4
+# *.mp4
 *.mov
 *.MOV
 *.avi
