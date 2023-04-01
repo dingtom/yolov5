@@ -17,8 +17,8 @@ from pytorch_grad_cam.activations_and_gradients import ActivationsAndGradients
 
 
 class yolov5_heatmap:
-    def __init__(self, weight, cfg, device, method, layer, backward_type, conf_threshold, ratio):
-        device = torch.device(device)
+    def __init__(self, weight, cfg, method, layer, backward_type, conf_threshold, ratio):
+        device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         ckpt = torch.load(weight, map_location=device)
         model_names = ckpt['model'].names
         csd = ckpt['model'].float().state_dict()  # checkpoint state_dict as FP32
@@ -102,9 +102,8 @@ class yolov5_heatmap:
 
 def get_params():
     params = {
-        'weight': r'hand\original\train\exp\weights\best.pt',
+        'weight': r'data\hand\original\train\exp\weights\best.pt',
         'cfg': 'models/yolov5s.yaml',
-        'device': 'cpu' , #'cuda:0',
         'method': 'XGradCAM', # GradCAMPlusPlus, GradCAM, XGradCAM
         'layer': 'model.model[-2]',
         'backward_type': 'class', # class or conf

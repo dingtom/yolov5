@@ -17,7 +17,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         self.setupUi(self)
-        self.model = torch.hub.load("./", "custom", path=r"hand\train\original\weights\best.pt", source="local")
+        # self.model = torch.hub.load("./", "custom", path=r"hand\train\original\weights\best.pt", source="local")
+        # self.model = torch.hub.load("./", "custom", path="runs/train/exp/weights/best.pt", source="local")
+        self.model = torch.hub.load("./", "custom", path="yolov5s.pt", source="local")
+
         self.timer = QTimer()
         self.timer.setInterval(1)
         self.video = None
