@@ -365,7 +365,8 @@ mobilenetv3small summary: 330 layers, 5235267 parameters, 5235267 gradients, 12.
 ​         YOLOv5s summary: 214 layers, 7073569 parameters, 7073569 gradients, 16.1 GFLOPs
 ​   cbamattention summary: 262 layers, 7280325 parameters, 7280325 gradients, 16.7 GFLOPs
  swintransformer summary: 290 layers, 12870936 parameters, 12870936 gradients, 27.2 GFLOPs
-      mobilecbam summary: 273 layers, 3344320 parameters, 3344320 gradients, 4.7 GFLOPs
+      mobilecbam summary: 544 layers, 5649207 parameters, 5649207 gradients, 11.2 GFLOPs
+
     """
     parser = argparse.ArgumentParser()
     # parser.add_argument('--cfg', type=str, default='mobilenetv3small.yaml', help='model.yaml')

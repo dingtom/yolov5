@@ -1,11 +1,11 @@
 #first
 python train.py \
---cfg models/swintransformer.yaml \
+--cfg models/mobilecbam.yaml \
 --data data/hand.yaml \
 --epochs 100 \
---batch-size 32 \
+--batch-size 40 \
 --workers 4 \
---project '../drive/MyDrive/yolov5/cbamattention/train' \
+--project '../drive/MyDrive/yolov5/data/hand/mobilecbam/train' \
 --cache \
 # --patience 10 \
 # --resume \
