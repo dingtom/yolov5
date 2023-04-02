@@ -396,12 +396,21 @@ mobilenetv3small summary: 330 layers, 5235267 parameters, 5235267 gradients, 12.
 
                 
     # profile layer by layer
-    model(im, profile=True)
+    y = model(im, profile=True)
     # profile forward-backward
     results = profile(input=im, ops=[model], n=3)
     # report fused model summary
     model.fuse()
+
+
+    from torch.utils.tensorboard import SummaryWriter
+    tb_writer = SummaryWriter('./models')
+    LOGGER.info("Run 'tensorboard --logdir=models' to view tensorboard at http://localhost:6006/")
+    tb_writer.add_graph(torch.jit.trace(model, im, strict=False), [])  # add model graph
+    tb_writer.add_image('test', im[0], dataformats='CWH')  # add model to tensorboard
+
+
     # save for netron 
-    x = torch.randn(1, 3, 640, 640).to(device)
-    script_model = torch.jit.trace(model, x)
-    script_model.save("models/m.pt")
+    # x = torch.randn(1, 3, 640, 640).to(device)
+    # script_model = torch.jit.trace(model, x)
+    # script_model.save("models/m.pt")
