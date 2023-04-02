@@ -6,7 +6,7 @@
 *.tif
 *.tiff
 *.heic
-*.JPG
+# *.JPG
 *.JPEG
 *.PNG
 *.BMP
@@ -35,7 +35,7 @@ data/images/*
 !data/images/bus.jpg
 !data/*.sh
 
-results*.csv
+# results*.csv
 
 # Datasets -------------------------------------------------------------------------------------------------------------
 coco/
