@@ -102,8 +102,8 @@ class yolov5_heatmap:
 
 def get_params():
     params = {
-        'weight': r'data\hand\original\train\exp\weights\best.pt',
-        'cfg': 'models/yolov5s.yaml',
+        'weight': r'data\hand\mobilenetv3small\train\exp\weights\best.pt',
+        'cfg': 'models/mobilenetv3small.yaml',
         'method': 'XGradCAM', # GradCAMPlusPlus, GradCAM, XGradCAM
         'layer': 'model.model[-2]',
         'backward_type': 'class', # class or conf
@@ -114,4 +114,4 @@ def get_params():
 
 if __name__ == '__main__':
     model = yolov5_heatmap(**get_params())
-    model(r'data\images\bus.jpg', 'result')
+    model(r'data\hand\images\1.jpg', 'result')
