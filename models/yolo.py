@@ -361,20 +361,22 @@ def parse_model(d, ch):  # model_dict, input_channels(3)
 
 if __name__ == '__main__':
     """
-mobilenetv3small summary: 330 layers, 5235267 parameters, 5235267 gradients, 12.2 GFLOPs
-​         YOLOv5s summary: 214 layers, 7073569 parameters, 7073569 gradients, 16.1 GFLOPs
-​   cbamattention summary: 262 layers, 7280325 parameters, 7280325 gradients, 16.7 GFLOPs
+mobilenetv3small summary: 330 layers, 5072214 parameters, 5072214 gradients, 11.5 GFLOPs
+​         YOLOv5s summary: 214 layers, 7070872 parameters, 7070872 gradients, 16.1 GFLOPs
+​   cbamattention summary: 298 layers, 7135217 parameters, 7135217 gradients, 16.2 GFLOPs
  swintransformer summary: 290 layers, 12870936 parameters, 12870936 gradients, 27.2 GFLOPs
       mobilecbam summary: 544 layers, 5649207 parameters, 5649207 gradients, 11.2 GFLOPs
 
     """
+    simple = 0
+
     parser = argparse.ArgumentParser()
     # parser.add_argument('--cfg', type=str, default='mobilenetv3small.yaml', help='model.yaml')
     # parser.add_argument('--cfg', type=str, default='yolov5s.yaml', help='model.yaml')
     # parser.add_argument('--cfg', type=str, default='cbamattention.yaml', help='model.yaml')
     # parser.add_argument('--cfg', type=str, default='swintransformer.yaml', help='model.yaml')
-
-    parser.add_argument('--cfg', type=str, default='mobilecbam.yaml', help='model.yaml')
+    # parser.add_argument('--cfg', type=str, default='mobilecbam.yaml', help='model.yaml')
+    # parser.add_argument('--cfg', type=str, default='test.yaml', help='model.yaml')
     parser.add_argument('--batch-size', type=int, default=1, help='total batch size for all GPUs')
     parser.add_argument('--device', default='', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
     parser.add_argument('--profile', action='store_true', help='profile model speed')
@@ -394,21 +396,21 @@ mobilenetv3small summary: 330 layers, 5235267 parameters, 5235267 gradients, 12.
                 _ = Model(cfg)
             except Exception as e:
                 print(f'Error in {cfg}: {e}')
-
                 
-    # profile layer by layer
-    y = model(im, profile=True)
-    # profile forward-backward
-    results = profile(input=im, ops=[model], n=3)
-    # report fused model summary
-    model.fuse()
-
-
-    from torch.utils.tensorboard import SummaryWriter
-    tb_writer = SummaryWriter('./models')
-    LOGGER.info("Run 'tensorboard --logdir=models' to view tensorboard at http://localhost:6006/")
-    tb_writer.add_graph(torch.jit.trace(model, im, strict=False), [])  # add model graph
-    tb_writer.add_image('test', im[0], dataformats='CWH')  # add model to tensorboard
+    if simple:
+        # report fused model summary
+        model.fuse()
+    else:
+        # profile layer by layer
+        y = model(im, profile=True)
+        # profile forward-backward
+        results = profile(input=im, ops=[model], n=3)
+        from torch.utils.tensorboard import SummaryWriter
+        print('{}'.format(opt.cfg.split('.')[0]))
+        tb_writer = SummaryWriter('{}'.format(opt.cfg.split('.')[0]))
+        LOGGER.info("Run 'tensorboard --logdir=models' to view tensorboard at http://localhost:6006/")
+        tb_writer.add_graph(torch.jit.trace(model, im, strict=False), [])  # add model graph
+        tb_writer.add_image('test', im[0], dataformats='CWH')  # add model to tensorboard
 
 
     # save for netron 

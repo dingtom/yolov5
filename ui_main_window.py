@@ -21,7 +21,7 @@ from PySide6.QtWidgets import (QApplication, QFrame, QLabel, QMainWindow,
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
-            MainWindow.setObjectName(u"MainWindow")
+            MainWindow.setObjectName(u"检测系统")
         MainWindow.resize(776, 339)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")

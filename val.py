@@ -338,12 +338,16 @@ def run(
 
 def parse_opt():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--data', type=str, default=ROOT / 'data/car.yaml', help='dataset.yaml path')
+    # parser.add_argument('--data', type=str, default=ROOT / 'data/car.yaml', help='dataset.yaml path')
+    parser.add_argument('--data', type=str, default=ROOT / 'data/hand.yaml', help='dataset.yaml path')
+
     # parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'output\ONNX\quant_model.onnx', help='model path(s)')
-    parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'runs/train/exp/weights/best.pt', help='model path(s)')
+    # parser.add_argument('--weights', nargs='+', type=str, default=ROOT / r'data\car\cbamattention\train\exp3\weights\best.pt', help='model path(s)')
+
     # parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'runs/train/exp7/weights/best.onnx', help='model path(s)')
     # parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'runs/train/exp7/weights/best_simplify.onnx', help='model path(s)')
-    # parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'yolov5s.pt', help='model path(s)')
+    # parser.add_argument('--weights', nargs='+', type=str, default=r'D:\work\yolov5\data\car\cbamattention\train\exp\weights\best.pt', help='model path(s)')
+    parser.add_argument('--weights', nargs='+', type=str, default=r'data\hand\original\train\exp\weights\best.pt', help='model path(s)')
    
     parser.add_argument('--batch-size', type=int, default=8, help='batch size')
     parser.add_argument('--imgsz', '--img', '--img-size', type=int, default=640, help='inference size (pixels)')
