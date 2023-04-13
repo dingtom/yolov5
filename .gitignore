@@ -1,31 +1,31 @@
 # Repo-specific GitIgnore ----------------------------------------------------------------------------------------------
-# *.jpg
-# *.jpeg
-# *.png
-# *.bmp
-# *.tif
-# *.tiff
-# *.heic
-# *.JPG
-# *.JPEG
-# *.PNG
-# *.BMP
-# *.TIF
-# *.TIFF
-# *.HEIC
-# *.mp4
-# *.mov
-# *.MOV
-# *.avi
-# *.data
-# *.json
-# *.cfg
+*.jpg
+*.jpeg
+*.png
+*.bmp
+*.tif
+*.tiff
+*.heic
+*.JPG
+*.JPEG
+*.PNG
+*.BMP
+*.TIF
+*.TIFF
+*.HEIC
+*.mp4
+*.mov
+*.MOV
+*.avi
+*.data
+*.json
+*.cfg
 !setup.cfg
 !cfg/yolov3*.cfg
 
 storage.googleapis.com
 runs/*
-# data/*
+data/*
 data/images/*
 !data/*.yaml
 !data/hyps
@@ -48,15 +48,15 @@ VOC/
 !targets*.mat
 
 # Neural Network weights -----------------------------------------------------------------------------------------------
-# *.weights
-# *.pt
-# *.pb
-# *.onnx
-# *.engine
-# *.mlmodel
-# *.torchscript
-# *.tflite
-# *.h5
+*.weights
+*.pt
+*.pb
+*.onnx
+*.engine
+*.mlmodel
+*.torchscript
+*.tflite
+*.h5
 *_saved_model/
 *_web_model/
 *_openvino_model/
