@@ -373,7 +373,7 @@ mobilenetv3small summary: 330 layers, 5072214 parameters, 5072214 gradients, 11.
     parser = argparse.ArgumentParser()
     # parser.add_argument('--cfg', type=str, default='mobilenetv3small.yaml', help='model.yaml')
     # parser.add_argument('--cfg', type=str, default='yolov5s.yaml', help='model.yaml')
-    # parser.add_argument('--cfg', type=str, default='cbamattention.yaml', help='model.yaml')
+    parser.add_argument('--cfg', type=str, default='cbamattention1.yaml', help='model.yaml')
     # parser.add_argument('--cfg', type=str, default='swintransformer.yaml', help='model.yaml')
     # parser.add_argument('--cfg', type=str, default='mobilecbam.yaml', help='model.yaml')
     # parser.add_argument('--cfg', type=str, default='test.yaml', help='model.yaml')
