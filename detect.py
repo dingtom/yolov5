@@ -217,9 +217,9 @@ def parse_opt():
     parser = argparse.ArgumentParser()
     # parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'yolov5s.pt', help='model path or triton URL')
     # parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'runs/train/exp5/weights/best.pt', help='model path(s)')
-    parser.add_argument('--weights', nargs='+', type=str, default=ROOT / r'data\car\cbamattention\train\exp3\weights\best.pt', help='model path(s)')
+    parser.add_argument('--weights', nargs='+', type=str, default=ROOT / r'runs\train\exp8\weights\best.pt', help='model path(s)')
     # parser.add_argument('--source', type=str, default='', help='file/dir/URL/glob/screen/0(webcam)')
-    parser.add_argument('--source', type=str, default=r'0', help='file/dir/URL/glob, 0 for webcam')
+    parser.add_argument('--source', type=str, default=r'E:\work\data\captcha\test', help='file/dir/URL/glob, 0 for webcam')
     # parser.add_argument('--data', type=str, default=ROOT / 'data/coco128.yaml', help='dataset.yaml path')
 
     parser.add_argument('--data', type=str, default=ROOT / 'data/car.yaml', help='(optional) dataset.yaml path')

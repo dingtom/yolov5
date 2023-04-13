@@ -203,7 +203,9 @@ class ConfusionMatrix:
         nc, nn = 13, 13  # number of classes, names
         sn.set(font_scale=1.0 if nc < 50 else 0.8)  # for label size
         labels = (0 < nn < 99) and (nn == nc)  # apply names to ticklabels
-        ticklabels = (["call","dislike","fist","four","like","mute","ok","one","palm","peace","stop","three","two_up"] + ['background']) if labels else "auto"
+        # 只验证指定类别
+        # ticklabels = (["call","dislike","fist","four","like","mute","ok","one","palm","peace","stop","three","two_up"] + ['background']) if labels else "auto"
+        ticklabels = (names + ['background']) if labels else "auto"
         with warnings.catch_warnings():
             warnings.simplefilter('ignore')  # suppress empty matrix RuntimeWarning: All-NaN slice encountered
             sn.heatmap(array,

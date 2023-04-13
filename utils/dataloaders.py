@@ -910,7 +910,6 @@ def extract_boxes(path=DATASETS_DIR / 'coco128'):  # from utils.dataloaders impo
             if Path(lb_file).exists():
                 with open(lb_file) as f:
                     lb = np.array([x.split() for x in f.read().strip().splitlines()], dtype=np.float32)  # labels
-
                 for j, x in enumerate(lb):
                     c = int(x[0])  # class
                     f = (path / 'classifier') / f'{c}' / f'{path.stem}_{im_file.stem}_{j}.jpg'  # new filename
@@ -976,6 +975,13 @@ def verify_image_label(args):
             nf = 1  # label found
             with open(lb_file) as f:
                 lb = [x.split() for x in f.read().strip().splitlines() if len(x)]
+                # 只训练训练某些类别
+                # need =['0']
+                # lb = [x.split() for x in f.read().strip().splitlines() if len(x) and x[0] in need]
+                # for ll in lb:
+                    # ll[0] = '0'
+                #这里不改的话，配置文件里nc设为1会报错：***Possible class labels are 0-0
+                
                 if any(len(x) > 6 for x in lb):  # is segment
                     classes = np.array([x[0] for x in lb], dtype=np.float32)
                     segments = [np.array(x[1:], dtype=np.float32).reshape(-1, 2) for x in lb]  # (cls, xy1...)
