@@ -25,6 +25,9 @@ try:
 except (ImportError, AssertionError):
     wandb = None
 
+os.environ["WANDB_API_KEY"] = '9f96890005c87ade5519558a19cb23b4cd12cd33'
+os.environ["WANDB_MODE"] = "offline"
+
 RANK = int(os.getenv('RANK', -1))
 WANDB_ARTIFACT_PREFIX = 'wandb-artifact://'
 
