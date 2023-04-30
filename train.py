@@ -439,11 +439,14 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
 
 def parse_opt(known=False):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weights', type=str, default=ROOT / 'yolov5s.pt', help='initial weights path')
+    # parser.add_argument('--weights', type=str, default=ROOT / 'yolov5s.pt', help='initial weights path')
+    parser.add_argument('--weights', type=str, default=r'C:\Users\WENCHAO\Desktop\last.pt', help='initial weights path')
     parser.add_argument('--amp', action='store_true', help='use amp')
-    parser.add_argument('--cfg', type=str, default='models/yolov5s.yaml', help='model.yaml path')
+    parser.add_argument('--cfg', type=str, default='models/mobilenetv3small.yaml', help='model.yaml path')
+    # parser.add_argument('--cfg', type=str, default='models/yolov5s.yaml', help='model.yaml path')
+
     # parser.add_argument('--data', type=str, default=ROOT / 'data/zhongliu.yaml', help='dataset.yaml path')
-    parser.add_argument('--data', type=str, default=ROOT / 'data/sea.yaml', help='dataset.yaml path')
+    parser.add_argument('--data', type=str, default=ROOT / 'data/food.yaml', help='dataset.yaml path')
     parser.add_argument('--epochs', type=int, default=200, help='total training epochs')
     parser.add_argument('--batch-size', type=int, default=16, help='total batch size for all GPUs, -1 for autobatch')
     parser.add_argument('--cache', type=str, nargs='?', const='ram', help='--cache images in "ram" (default) or "disk"')
