@@ -1,0 +1,8 @@
+path: /home/tomding/hdd/data/firehydrant 
+train:  train.txt 
+val: train.txt 
+# test: test.txt  
+
+# Classes
+
+names: ['fireHydrant', 'fireExtinguisherBox', 'fireExtinguisher']

@@ -284,9 +284,9 @@ def run(
         LOGGER.warning(f'WARNING ⚠️ no labels found in {task} set, can not compute metrics without labels')
 
     # Print results per class
-    if (verbose or (nc < 50 and not training)) and nc > 1 and len(stats):
-        for i, c in enumerate(ap_class):
-            LOGGER.info(pf % (names[c], seen, nt[c], p[i], r[i], ap50[i], ap[i]))
+    # if (verbose or (nc < 50 and not training)) and nc > 1 and len(stats): # 显示所有类别的准确率、召回率
+    for i, c in enumerate(ap_class):
+        LOGGER.info(pf % (names[c], seen, nt[c], p[i], r[i], ap50[i], ap[i]))
 
     # Print speeds
     t = tuple(x.t / seen * 1E3 for x in dt)  # speeds per image
@@ -346,22 +346,25 @@ def parse_opt():
 
     # parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'runs/train/exp7/weights/best.onnx', help='model path(s)')
     # parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'runs/train/exp7/weights/best_simplify.onnx', help='model path(s)')
-    # parser.add_argument('--weights', nargs='+', type=str, default=r'D:\work\yolov5\data\car\cbamattention\train\exp\weights\best.pt', help='model path(s)')
-    parser.add_argument('--weights', nargs='+', type=str, default=r'data\hand\mobilecbam\train\exp\weights\best.pt', help='model path(s)')
-    parser.add_argument('--project', default=ROOT / r'data\hand\original\val', help='save to project/name')
-    parser.add_argument('--task', default='test', help='train, val, test, speed or study')
-    parser.add_argument('--workers', type=int, default=2, help='max dataloader workers (per RANK in DDP mode)')
-
-    parser.add_argument('--batch-size', type=int, default=48, help='batch size')
-    parser.add_argument('--imgsz', '--img', '--img-size', type=int, default=640, help='inference size (pixels)')
+    # parser.add_argument('--weights', nargs='+', type=str, default=r'data/hand/mobilenetv3small/train/exp/weights/best.pt', help='model path(s)')
+    # parser.add_argument('--weights', nargs='+', type=str, default=r'data/hand/yolov5s/train/exp/weights/best.pt', help='model path(s)')
+    # parser.add_argument('--weights', nargs='+', type=str, default=r'data/hand/cbamattention/train/exp/weights/best.pt', help='model path(s)')
+    parser.add_argument('--weights', nargs='+', type=str, default=r'data/hand/mobilecbam/train/exp/weights/best.pt', help='model path(s)')
+    # parser.add_argument('--weights', nargs='+', type=str, default=r'runs/train/exp13/weights/best.pt', help='model path(s)')
+    parser.add_argument('--project', default=ROOT / r'runs/val', help='save to project/name')
     parser.add_argument('--conf-thres', type=float, default=0.001, help='confidence threshold')
     parser.add_argument('--iou-thres', type=float, default=0.6, help='NMS IoU threshold')
-    parser.add_argument('--max-det', type=int, default=300, help='maximum detections per image')
     parser.add_argument('--device', default='', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
-    parser.add_argument('--single-cls', action='store_true', help='treat as single-class dataset')
-    parser.add_argument('--augment', action='store_true', help='augmented inference')
-    parser.add_argument('--verbose', action='store_true', help='report mAP by class')
+    parser.add_argument('--task', default='test', help='train, val, test, speed or study')
+    parser.add_argument('--batch-size', type=int, default=64, help='batch size')
+    parser.add_argument('--workers', type=int, default=8, help='max dataloader workers (per RANK in DDP mode)')
+    parser.add_argument('--augment', default=True, help='augmented inference')
     parser.add_argument('--save-txt', action='store_true', help='save results to *.txt')
+
+    parser.add_argument('--imgsz', '--img', '--img-size', type=int, default=640, help='inference size (pixels)')
+    parser.add_argument('--max-det', type=int, default=300, help='maximum detections per image')
+    parser.add_argument('--single-cls', action='store_true', help='treat as single-class dataset')
+    parser.add_argument('--verbose', action='store_true', help='report mAP by class')
     parser.add_argument('--save-hybrid', action='store_true', help='save label+prediction hybrid results to *.txt')
     parser.add_argument('--save-conf', action='store_true', help='save confidences in --save-txt labels')
     parser.add_argument('--save-json', action='store_true', help='save a COCO-JSON results file')

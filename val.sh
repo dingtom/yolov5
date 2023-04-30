@@ -9,6 +9,7 @@
 
 
 python val.py  \
+--task test \
 --weights 'runs/train/exp21/weights/best.pt'  \
 --data data/zhongliu.yaml  \
 --workers 2 \

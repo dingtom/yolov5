@@ -1,0 +1,7 @@
+path: /home/tomding/hdd/data/fatigue  # dataset root dir
+# path: /content/drive/MyDrive/hand
+train: train.txt  # train images (relative to 'path') 118287 images
+val: val.txt  # val images (relative to 'path') 5000 images
+test: test.txt  # 20288 of 40670 images, submit to https://competitions.codalab.org/competitions/20794
+# Classes
+names: ["closed_mouth", "open_eye", "open_mouth", "closed_eye"]

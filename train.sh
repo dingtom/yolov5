@@ -18,13 +18,22 @@
 
 python train.py \
 --cfg models/yolov5s.yaml \
---data data/zhongliu.yaml \
+--data data/hand.yaml \
 --epochs 100 \
---batch-size 16 \
---workers 2 \
---project 'data/zhongliu/original/train' \
+--batch-size 80 \
+--workers  4 \
+--project 'data/hand/original/train' \
 --cache \
-# --amp \
+--amp;
+
+python val.py  \
+--task test \
+--weights 'data/hand/original/train/weights/best.pt'  \
+--data data/hand.yaml  \
+--workers 4 \
+--batch-size 80  \
+--name original \
+--augment 
 
 
 # --patience 10 \
