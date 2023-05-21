@@ -25,6 +25,10 @@ from utils.general import (CONFIG_DIR, FONT, LOGGER, check_font, check_requireme
 from utils.metrics import fitness
 from utils.segment.general import scale_image
 
+from tqdm import tqdm
+import numpy as np
+from collections import Counter
+
 # Settings
 RANK = int(os.getenv('RANK', -1))
 matplotlib.rc('font', **{'size': 11})
@@ -573,3 +577,61 @@ def save_one_box(xyxy, im, file=Path('im.jpg'), gain=1.02, pad=10, square=False,
         # cv2.imwrite(f, crop)  # save BGR, https://github.com/ultralytics/yolov5/issues/7007 chroma subsampling issue
         Image.fromarray(crop[..., ::-1]).save(f, quality=95, subsampling=0)  # save RGB
     return crop
+
+def plot_label_pre(save_path, data_path):
+    count = 0
+    miss = 0
+    # 把label画到图像上和预测的图像对比
+    with open(os.path.join(data_path, 'labels', 'classes.txt'), "r") as f:
+            classes = f.read().splitlines()
+    with open(os.path.join(data_path, 'test.txt'), "r") as f:
+            tests = f.read().splitlines()
+    compare_path = os.path.join(save_path, 'compare')
+    if not os.path.exists(compare_path): os.mkdir(compare_path) 
+    for i in tqdm(tests):
+        image_path = os.path.join(data_path, i.replace('./', ''))
+        image_name = i.split('/')[-1]
+        txt_name = i.split('/')[-1].replace('jpg', 'txt')
+        class_ids = []
+        pre_ids = []  # 收集预测值用来对比
+        img = cv2.imread(image_path)
+        with open(os.path.join(data_path, 'labels', txt_name), "r") as f:
+            labels = f.read().splitlines()
+        for label in labels:
+            label_parts = label.split()
+            try:
+                x, y, w, h = map(float, label_parts[1:])
+                class_id = int(label_parts[0])
+                class_ids.append(class_id)
+            except:
+                print(i, label)
+            left, top, right, bottom = int((x - w / 2) * img.shape[1]), int((y - h / 2) * img.shape[0]), int((x + w / 2) * img.shape[1]), int((y + h / 2) * img.shape[0])
+            c = colors(int(class_id), True)  # 颜色
+            cv2.rectangle(img, (left, top), (right, bottom), c, 3, cv2.LINE_AA)
+            cv2.putText(img, str(classes[class_id]), (left, int(top - 5)), cv2.FONT_HERSHEY_SIMPLEX, 3, c, thickness=3, lineType=cv2.LINE_AA)
+            cv2.putText(img, 'label', (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 3, (0, 0, 255), thickness=3, lineType=cv2.LINE_AA)
+
+        pre_img = cv2.imread(image_path)
+        cv2.putText(pre_img, 'predict', (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 3, (0, 0, 255), thickness=3, lineType=cv2.LINE_AA)
+
+        try:
+            with open(os.path.join(save_path, 'labels', txt_name), "r") as f:
+                pres = f.read().splitlines()
+        except:
+            # print('no such file', i)
+            miss += 1
+        for pre in pres:
+            pre_parts = pre.split()
+            try:
+                x, y, w, h = map(float, pre_parts[1:])
+                pre_id = int(pre_parts[0])
+                pre_ids.append(pre_id)
+            except:
+                print(i, pre)
+            pre_left, pre_top, pre_right, pre_bottom = int((x - w / 2) * img.shape[1]), int((y - h / 2) * img.shape[0]), int((x + w / 2) * img.shape[1]), int((y + h / 2) * img.shape[0])
+
+        if Counter(class_ids) != Counter(pre_ids):
+            merged_img = np.concatenate((img, pre_img), axis=1)
+            cv2.imwrite(os.path.join(compare_path, image_name), merged_img)
+            count += 1
+    print('There are {} pictrures different with label and {} is miss'.format(count, miss))

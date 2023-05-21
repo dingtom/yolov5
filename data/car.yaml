@@ -1,8 +1,0 @@
-path: d:/data/car_person
-train: train.txt   # train images (relative to 'path') 39384 images
-val: val.txt   # val images (relative to 'path') 15062 images
-test: test.txt  # test images (optional) https://eval.ai/web/challenges/challenge-page/800/overview
-
-# Classes
-nc: 3  # number of classes
-names: ['car',  'person',  'rider']  # class names

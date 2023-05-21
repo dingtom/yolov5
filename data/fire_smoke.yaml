@@ -1,0 +1,9 @@
+path: /home/tomding/hdd/data/fire_smoke  # dataset root dir
+train: train.txt  # train images (relative to 'path') 118287 images
+val: val.txt  # val images (relative to 'path') 5000 images
+val: test.txt  # val images (relative to 'path') 5000 images
+
+# Classes
+names:
+  0: fire
+  1: smoke

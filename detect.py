@@ -123,7 +123,6 @@ def run(
         with dt[1]:
             visualize = increment_path(save_dir / Path(path).stem, mkdir=True) if visualize else False
             pred = model(im, augment=augment, visualize=visualize)
-
         # NMS
         with dt[2]:
             pred = non_max_suppression(pred, conf_thres, iou_thres, classes, agnostic_nms, max_det=max_det)
@@ -217,7 +216,9 @@ def parse_opt():
     parser = argparse.ArgumentParser()
     # parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'yolov5s.pt', help='model path or triton URL')
     # parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'runs/train/exp5/weights/best.pt', help='model path(s)')
-    parser.add_argument('--weights', nargs='+', type=str, default=ROOT / r'data\hand\original\train\exp\weights\best.pt', help='model path(s)')
+    parser.add_argument('--weights', nargs='+', type=str, default=ROOT / r'data/hand/original/train/exp/weights/best.pt', help='model path(s)')
+    parser.add_argument('--project', default=ROOT / 'runs/detect', help='save results to project/name')
+
     # parser.add_argument('--source', type=str, default='', help='file/dir/URL/glob/screen/0(webcam)')
     parser.add_argument('--source', type=str, default=r'D:\data\hand_small\test', help='file/dir/URL/glob, 0 for webcam')
     # parser.add_argument('--data', type=str, default=ROOT / 'data/coco128.yaml', help='dataset.yaml path')
@@ -240,7 +241,6 @@ def parse_opt():
     parser.add_argument('--visualize', action='store_true', help='visualize features')
     # 如果指定这个参数，则对所有模型进行strip_optimizer操作，去除pt文件中的优化器等信息
     parser.add_argument('--update', action='store_true', help='update all models')
-    parser.add_argument('--project', default=ROOT / 'runs/detect', help='save results to project/name')
     parser.add_argument('--name', default='exp', help='save results to project/name')
     parser.add_argument('--exist-ok', action='store_true', help='existing project/name ok, do not increment')
     parser.add_argument('--line-thickness', default=3, type=int, help='bounding box thickness (pixels)')

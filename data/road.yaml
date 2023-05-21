@@ -1,0 +1,7 @@
+path: /home/tomding/hdd/data/road  
+train: train.txt  
+val: val.txt
+test: test.txt 
+
+nc: 8
+names: ['Crack', 'Manhole', 'Net', 'Pothole', 'Patch-Crack', 'Patch-Net', 'Patch-Pothole', 'other']

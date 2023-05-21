@@ -28,6 +28,7 @@ from pathlib import Path
 import numpy as np
 import torch
 from tqdm import tqdm
+import logging
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]  # YOLOv5 root directory
@@ -42,7 +43,7 @@ from utils.general import (LOGGER, Profile, check_dataset, check_img_size, check
                            coco80_to_coco91_class, colorstr, increment_path, non_max_suppression, print_args,
                            scale_boxes, xywh2xyxy, xyxy2xywh)
 from utils.metrics import ConfusionMatrix, ap_per_class, box_iou
-from utils.plots import output_to_target, plot_images, plot_val_study
+from utils.plots import output_to_target, plot_images, plot_val_study, plot_label_pre
 from utils.torch_utils import select_device, smart_inference_mode
 
 
@@ -124,6 +125,7 @@ def run(
         plots=True,
         callbacks=Callbacks(),
         compute_loss=None,
+        plot_compare=False, # 把预测错的都画出来
 ):
     # Initialize/load model and set device
     training = model is not None
@@ -161,7 +163,7 @@ def run(
     nc = 1 if single_cls else int(data['nc'])  # number of classes
     iouv = torch.linspace(0.5, 0.95, 10, device=device)  # iou vector for mAP@0.5:0.95
     niou = iouv.numel()
-
+ 
     # Dataloader
     if not training:
         if pt and not single_cls:  # check --weights are trained on --data
@@ -299,6 +301,9 @@ def run(
         confusion_matrix.plot(save_dir=save_dir, names=list(names.values()))
         callbacks.run('on_val_end', nt, tp, fp, p, r, f1, ap, ap50, ap_class, confusion_matrix)
 
+    if plot_compare:
+        plot_label_pre(save_dir, data['path'])
+
     # Save JSON
     if save_json and len(jdict):
         w = Path(weights[0] if isinstance(weights, list) else weights).stem if weights is not None else ''  # weights
@@ -338,20 +343,21 @@ def run(
 
 def parse_opt():
     parser = argparse.ArgumentParser()
-    # parser.add_argument('--data', type=str, default=ROOT / 'data/car.yaml', help='dataset.yaml path')
-    parser.add_argument('--data', type=str, default=ROOT / 'data/hand.yaml', help='dataset.yaml path')
+    parser.add_argument('--data', type=str, default=ROOT / 'data/car.yaml', help='dataset.yaml path')
+    # parser.add_argument('--data', type=str, default=ROOT / 'data/hand.yaml', help='dataset.yaml path')
 
+    # parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'yolov5s.pt', help='model path(s)')
     # parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'output\ONNX\quant_model.onnx', help='model path(s)')
-    # parser.add_argument('--weights', nargs='+', type=str, default=ROOT / r'data\car\cbamattention\train\exp3\weights\best.pt', help='model path(s)')
-
     # parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'runs/train/exp7/weights/best.onnx', help='model path(s)')
     # parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'runs/train/exp7/weights/best_simplify.onnx', help='model path(s)')
-    # parser.add_argument('--weights', nargs='+', type=str, default=r'data/hand/mobilenetv3small/train/exp/weights/best.pt', help='model path(s)')
-    # parser.add_argument('--weights', nargs='+', type=str, default=r'data/hand/yolov5s/train/exp/weights/best.pt', help='model path(s)')
-    # parser.add_argument('--weights', nargs='+', type=str, default=r'data/hand/cbamattention/train/exp/weights/best.pt', help='model path(s)')
-    parser.add_argument('--weights', nargs='+', type=str, default=r'data/hand/mobilecbam/train/exp/weights/best.pt', help='model path(s)')
+    # parser.add_argument('--weights', nargs='+', type=str, default=r'runs/hand/mobilenetv3small/train/exp/weights/best.pt', help='model path(s)')
+    # parser.add_argument('--weights', nargs='+', type=str, default=r'runs/hand/yolov5-transformer-Improved/train/exp/weights/best.pt', help='model path(s)')
+    # parser.add_argument('--weights', nargs='+', type=str, default=r'runs/hand/cbamattention/train/exp/weights/best.pt', help='model path(s)')
+    # parser.add_argument('--weights', nargs='+', type=str, default=r'runs/hand/mobilecbam/train/exp/weights/best.pt', help='model path(s)')
+    parser.add_argument('--weights', nargs='+', type=str, default=r'runs/car/yolov5s/train/exp/weights/best.pt', help='model path(s)')
     # parser.add_argument('--weights', nargs='+', type=str, default=r'runs/train/exp13/weights/best.pt', help='model path(s)')
-    parser.add_argument('--project', default=ROOT / r'runs/val', help='save to project/name')
+
+    parser.add_argument('--project', default=r'runs/car/yolov5s/val', help='save to project/name')
     parser.add_argument('--conf-thres', type=float, default=0.001, help='confidence threshold')
     parser.add_argument('--iou-thres', type=float, default=0.6, help='NMS IoU threshold')
     parser.add_argument('--device', default='', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
@@ -360,6 +366,7 @@ def parse_opt():
     parser.add_argument('--workers', type=int, default=8, help='max dataloader workers (per RANK in DDP mode)')
     parser.add_argument('--augment', default=True, help='augmented inference')
     parser.add_argument('--save-txt', action='store_true', help='save results to *.txt')
+    parser.add_argument('--plot-compare', action='store_true', help='plot_compare')
 
     parser.add_argument('--imgsz', '--img', '--img-size', type=int, default=640, help='inference size (pixels)')
     parser.add_argument('--max-det', type=int, default=300, help='maximum detections per image')
@@ -416,3 +423,5 @@ def main(opt):
 if __name__ == "__main__":
     opt = parse_opt()
     main(opt)
+    # plot_label_pre('/home/tomding/hdd/work/yolov5/runs/hand/yolov5s/val/exp', '/home/tomding/hdd/data/hand')
+

@@ -317,13 +317,13 @@ def parse_model(d, ch):  # model_dict, input_channels(3)
         if m in {
                 Conv, GhostConv, Bottleneck, GhostBottleneck, SPP, SPPF, DWConv, MixConv2d, Focus, CrossConv,
                 BottleneckCSP, C3, C3TR, C3SPP, C3Ghost, nn.ConvTranspose2d, DWConvTranspose2d, C3x,
-                Conv_BN_HSwish, MobileNetV3_InvertedResidual, C3STR, CBAM}:
+                Conv_BN_HSwish, MobileNetV3_InvertedResidual, C3STR, CBAM, CA, C2f}:
             c1, c2 = ch[f], args[0]
             if c2 != no:  # if not output
                 c2 = make_divisible(c2 * gw, 8)
 
             args = [c1, c2, *args[1:]]
-            if m in {BottleneckCSP, C3, C3TR, C3Ghost, C3x}:
+            if m in {BottleneckCSP, C3, C3TR, C3Ghost, C3x, C2f}:
                 args.insert(2, n)  # number of repeats
                 n = 1
         elif m is nn.BatchNorm2d:
@@ -375,8 +375,10 @@ mobilenetv3small summary: 330 layers, 5072214 parameters, 5072214 gradients, 11.
     # parser.add_argument('--cfg', type=str, default='yolov5s.yaml', help='model.yaml')
     # parser.add_argument('--cfg', type=str, default='cbamattention1.yaml', help='model.yaml')
     # parser.add_argument('--cfg', type=str, default='swintransformer.yaml', help='model.yaml')
-    parser.add_argument('--cfg', type=str, default='mobilecbam.yaml', help='model.yaml')
-    # parser.add_argument('--cfg', type=str, default='test.yaml', help='model.yaml')
+    # parser.add_argument('--cfg', type=str, default='mobilecbam.yaml', help='model.yaml')
+    # parser.add_argument('--cfg', type=str, default='/home/tomding/hdd/work/yoloair/configs/yolov5-transformer-Improved/yolov5scbam-swin-bifpn.yaml', help='model.yaml')
+    # parser.add_argument('--cfg', type=str, default='coorattention.yaml', help='model.yaml')
+    parser.add_argument('--cfg', type=str, default='yolov5s_C2f.yaml', help='model.yaml')
     parser.add_argument('--batch-size', type=int, default=1, help='total batch size for all GPUs')
     parser.add_argument('--device', default='', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
     parser.add_argument('--profile', action='store_true', help='profile model speed')
@@ -406,8 +408,10 @@ mobilenetv3small summary: 330 layers, 5072214 parameters, 5072214 gradients, 11.
         # profile forward-backward
         results = profile(input=im, ops=[model], n=3)
         from torch.utils.tensorboard import SummaryWriter
-        print('{}'.format(opt.cfg.split('.')[0]))
-        tb_writer = SummaryWriter('{}'.format(opt.cfg.split('.')[0]))
+        filename_with_ext = os.path.basename(opt.cfg)
+        modelname, ext = os.path.splitext(filename_with_ext)
+        save_dir = os.path.join('models/log/', )
+        tb_writer = SummaryWriter(save_dir)
         LOGGER.info("Run 'tensorboard --logdir=models' to view tensorboard at http://localhost:6006/")
         tb_writer.add_graph(torch.jit.trace(model, im, strict=False), [])  # add model graph
         tb_writer.add_image('test', im[0], dataformats='CWH')  # add model to tensorboard

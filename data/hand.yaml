@@ -1,9 +1,12 @@
-path: /home/tomding/hdd/data/hand  # dataset root dir
-# path: /content/drive/MyDrive/hand
-train: train.txt  # train images (relative to 'path') 118287 images
-val: val.txt  # val images (relative to 'path') 5000 images
-test: test.txt  # 20288 of 40670 images, submit to https://competitions.codalab.org/competitions/20794
-# Classes
+path: /home/tomding/hdd/data/hand  
+train: train.txt  
+val: val.txt
+test: test.txt 
+
+# 基本没有重叠的，iou调低点
+
+
+nc: 18
 names:
   0: call
   1: dislike
