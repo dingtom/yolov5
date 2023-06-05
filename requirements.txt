@@ -35,7 +35,7 @@ tensorflowjs>=3.9.0  # TF.js export
 openvino-dev  # OpenVINO export
 
 # Deploy --------------------------------------
-tritonclient[all]~=2.24.0
+tritonclient[all]~=2.34.0
 
 # Extras --------------------------------------
 ipython  # interactive notebook
