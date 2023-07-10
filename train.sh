@@ -1,10 +1,11 @@
+echo starting train
 python train.py \
---project 'runs/cardnumber/yolov5s/train' \
+--project 'runs/fish/yolov5s/train' \
 --cfg models/yolov5s.yaml \
---data data/cardnumber.yaml \
---batch-size 64 \
+--data data/fish.yaml \
+--batch-size 16 \
 --cache \
---amp
+# --amp
 
 
 

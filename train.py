@@ -453,7 +453,7 @@ def parse_opt(known=False):
     parser.add_argument('--data', type=str, default=ROOT / 'data/hand.yaml', help='dataset.yaml path')
     parser.add_argument('--epochs', type=int, default=200, help='total training epochs')
     parser.add_argument('--patience', type=int, default=20, help='EarlyStopping patience (epochs without improvement)')
-    parser.add_argument('--workers', type=int, default=8, help='max dataloader workers (per RANK in DDP mode)')
+    parser.add_argument('--workers', type=int, default=2, help='max dataloader workers (per RANK in DDP mode)')
     parser.add_argument('--batch-size', type=int, default=64, help='total batch size for all GPUs, -1 for autobatch')
     parser.add_argument('--amp', action='store_true', help='use amp')
     parser.add_argument('--cache', type=str, nargs='?', const='ram', help='--cache images in "ram" (default) or "disk"')
