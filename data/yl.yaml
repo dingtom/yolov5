@@ -1,0 +1,6 @@
+path: D:\data\yl
+train: train.txt
+val: val.txt  
+test: test.txt
+# Classes
+names: ['JZ', 'ZW', 'JS', 'SJ', 'SQ']

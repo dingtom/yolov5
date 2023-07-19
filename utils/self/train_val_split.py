@@ -10,7 +10,7 @@ import cv2
 # --------------------------------------划分训练测试集
 is_test = True
 extra_test = False # 把测试图片提出来
-path = r'/srv/samba/dingwenchao/hdd/SeaShips/images'
+path = r'D:\data\yl\images'
 files = [os.path.join('./images/', i) for i in os.listdir(path)]
 random.shuffle(files)
 t1 = int(len(files)*0.8)  # train percent
