@@ -221,6 +221,36 @@ def print_args(args: Optional[dict] = None, show_file=True, show_func=False):
     except ValueError:
         file = Path(file).stem
     s = (f'{file}: ' if show_file else '') + (f'{func}: ' if show_func else '')
+    # 创建FileHandler对象，用于写入日志到指定文件中
+    import datetime
+    # 获取当前时间
+    now = datetime.datetime.now()
+    # 格式化为字符串
+    formatted_time = now.strftime("%Y-%m-%d_%H-%M-%S.txt")
+    if s in ['train: ', 'val: ', 'detect: ']:
+        filename_with_ext = os.path.basename(args['data'])
+        dataname, ext = os.path.splitext(filename_with_ext)
+        save_dir = str(increment_path(Path(args['project']) / args['name'], exist_ok=args['exist_ok']))
+        if s == 'train: ':
+            modelname = str(args['cfg']).split('/')[-1].replace('.yaml', '')+'_'+save_dir.split('/')[-1]
+        else:
+            modelname = str(args['weights']).split('/')[2]+'_'+save_dir.split('/')[-1]
+        log_save_dir = os.path.join('runs', dataname)
+        if not os.path.exists(log_save_dir): os.mkdir(log_save_dir) 
+        log_save_dir = os.path.join(log_save_dir, s.split(':')[0]+'_'+modelname+'_'+formatted_time)
+    elif s == 'models/yolo: ':
+        filename_with_ext = os.path.basename(args['cfg'])
+        modelname, ext = os.path.splitext(filename_with_ext)
+        log_save_dir = os.path.join('models/log/', modelname+'_'+formatted_time)
+    elif s == 'export: ':
+        filename_with_ext = os.path.basename(args['data'])
+        dataname, ext = os.path.splitext(filename_with_ext)
+        modelname = str(args['weights']).split('/')[2]
+        log_save_dir = os.path.join('runs', dataname, s.split(':')[0]+'_'+modelname+'_'+formatted_time)
+    file_handler = logging.FileHandler(log_save_dir)
+    # 将FileHandler添加到Logger中
+    LOGGER.addHandler(file_handler)
+    LOGGER.info(colorstr(s) + ', '.join(f'{k}={v}' for k, v in args.items()))
 
 
 def init_seeds(seed=0, deterministic=False):

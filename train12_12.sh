@@ -1,18 +1,23 @@
-echo starting train
-python train.py \
---project 'runs/fish/yolov5s/train' \
---cfg models/yolov5s.yaml \
---data data/fish.yaml \
---batch-size 16 \
---cache \
-# --amp
+python -m torch.distributed.launch --nproc_per_node 4 --use_env train.py \
+--amp  \
+--project runs/fabric/yolov5s/train \
+--cfg models/yolov5m.yaml \
+--device 0,1,2,3 \
+--imgsz 1920  \
+--data data/fabric.yaml \
+--batch-size 12 \
+--workers 32 \
+--epochs  500 \
+--patience 50  \
+--weights runs/fabric/yolov5s/train/exp19/weights/best.pt  \
+#--resume    \
+
+#--cache           \
+
+#-m torch.distributed.launch --nproc_per_node 4 --use_env
 
 
 
-# --weights 'runs/cardnumber/yolov5s/train/exp2/weights/best.pt'  \
-
-# --epochs 200 \
-# --workers 8 \
 
 # python train.py \
 # --cfg models/yolov5s_C2f.yaml \

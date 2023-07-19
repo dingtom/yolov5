@@ -1,0 +1,9 @@
+path:  /srv/samba/dingwenchao/SeaShips
+train:  train.txt
+val: val.txt
+test: test.txt
+
+names:  ['bulk cargo carrier', 'ore carrier', 'fishing boat', 'general cargo ship', 'container ship', 'passenger ship']
+
+
+
