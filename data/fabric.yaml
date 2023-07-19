@@ -1,0 +1,11 @@
+path:  /srv/samba/dingwenchao/data/fabric/zzbu_voc_06_13
+train:  train.txt
+val: val.txt
+test: test.txt
+
+names:  ['BB', 'CS', 'DJ', 'DPD', 'DW', 'GS', 'JK', 'PD', 'WZ', 'ZH', 'ZK', 'ZW']
+
+
+
+
+
