@@ -1,12 +1,14 @@
-python train.py \
+python -m torch.distributed.launch --nproc_per_node 4 --use_env train.py \
 --amp  \
+--device 0,1,2,3 \
 --weights yolov5s.pt  \
---project runs/seaship/yolov5s/train \
---cfg models/yolov5s.yaml \
+--project runs/seaship/train \
+--cfg models/mobilenetv3small.yaml \
+--hyp data/hyps/hyp.scratch-low.yaml  \
 --imgsz 640  \
 --data data/seaship.yaml \
---batch-size 40 \
---workers 16 \
+--batch-size 248 \
+--workers 32 \
 --epochs 200 \
 --cache       \
 #--resume

@@ -282,9 +282,10 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
         if RANK != -1:
             train_loader.sampler.set_epoch(epoch)
         pbar = enumerate(train_loader)
-        LOGGER.info(('\n' + '%11s' * 7) % ('Epoch', 'GPU_mem', 'box_loss', 'obj_loss', 'cls_loss', 'Instances', 'Size'))
+        LOGGER.info(('\n' + '%11s' * 8) % ('Epoch', str(epoch), 'GPU_mem', 'box_loss', 'obj_loss', 'cls_loss', 'Instances', 'Size'))
         if RANK in {-1, 0}:
             pbar = tqdm(pbar, total=nb, bar_format='{l_bar}{bar:10}{r_bar}{bar:-10b}')  # progress bar
+
         optimizer.zero_grad()
         for i, (imgs, targets, paths, _) in pbar:
             callbacks.run('on_train_batch_start')
@@ -441,14 +442,11 @@ def parse_opt(known=False):
     parser = argparse.ArgumentParser()
     parser.add_argument('--weights', type=str, default=ROOT / 'yolov5s.pt', help='initial weights path')
     # parser.add_argument('--weights', type=str, default=r'runs/hand/yolov5s/train/exp/weights/best.pt', help='initial weights path')
-
     parser.add_argument('--project', default=ROOT / 'runs/hand/coorattention/train', help='save to project/name')
     # parser.add_argument('--project', default=ROOT / 'runs/train', help='save to project/name')
-
     # parser.add_argument('--cfg', type=str, default='/home/tomding/hdd/work/yoloair/configs/yolov5-transformer-Improved/yolov5scbam-swin-bifpn.yaml', help='model.yaml path')
     parser.add_argument('--cfg', type=str, default='models/coorattention.yaml', help='model.yaml path')
     # parser.add_argument('--cfg', type=str, default='models/yolov5s.yaml', help='model.yaml path')
-
     # parser.add_argument('--data', type=str, default=ROOT / 'data/zhongliu.yaml', help='dataset.yaml path')
     parser.add_argument('--data', type=str, default=ROOT / 'data/hand.yaml', help='dataset.yaml path')
     parser.add_argument('--epochs', type=int, default=200, help='total training epochs')
