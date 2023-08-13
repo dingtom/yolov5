@@ -1,5 +1,6 @@
 python export.py  \
---weights runs/car_person/yolov5s/train/exp/weights/best.pt  \
+--data data/fabric.yaml \
+--weights runs/fabric/yolov5s/train/exp3/weights/best.pt  \
 --include engine \
 --simplify \
 --dynamic

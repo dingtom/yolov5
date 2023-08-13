@@ -226,7 +226,6 @@ def run(
                                         multi_label=True,
                                         agnostic=single_cls,
                                         max_det=max_det)
-
         # Metrics
         for si, pred in enumerate(preds):
             labels = targets[targets[:, 0] == si, 1:]
@@ -345,19 +344,7 @@ def run(
 def parse_opt():
     parser = argparse.ArgumentParser()
     parser.add_argument('--data', type=str, default=ROOT / 'data/car.yaml', help='dataset.yaml path')
-    # parser.add_argument('--data', type=str, default=ROOT / 'data/hand.yaml', help='dataset.yaml path')
-
-    # parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'yolov5s.pt', help='model path(s)')
-    # parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'output\ONNX\quant_model.onnx', help='model path(s)')
-    # parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'runs/train/exp7/weights/best.onnx', help='model path(s)')
-    # parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'runs/train/exp7/weights/best_simplify.onnx', help='model path(s)')
-    # parser.add_argument('--weights', nargs='+', type=str, default=r'runs/hand/mobilenetv3small/train/exp/weights/best.pt', help='model path(s)')
-    # parser.add_argument('--weights', nargs='+', type=str, default=r'runs/hand/yolov5-transformer-Improved/train/exp/weights/best.pt', help='model path(s)')
-    # parser.add_argument('--weights', nargs='+', type=str, default=r'runs/hand/cbamattention/train/exp/weights/best.pt', help='model path(s)')
-    # parser.add_argument('--weights', nargs='+', type=str, default=r'runs/hand/mobilecbam/train/exp/weights/best.pt', help='model path(s)')
     parser.add_argument('--weights', nargs='+', type=str, default=r'runs/car/yolov5s/train/exp/weights/best.pt', help='model path(s)')
-    # parser.add_argument('--weights', nargs='+', type=str, default=r'runs/train/exp13/weights/best.pt', help='model path(s)')
-
     parser.add_argument('--project', default=r'runs/car/yolov5s/val', help='save to project/name')
     parser.add_argument('--conf-thres', type=float, default=0.001, help='confidence threshold')
     parser.add_argument('--iou-thres', type=float, default=0.6, help='NMS IoU threshold')
@@ -367,6 +354,7 @@ def parse_opt():
     parser.add_argument('--workers', type=int, default=8, help='max dataloader workers (per RANK in DDP mode)')
     parser.add_argument('--augment', default=True, help='augmented inference')
     parser.add_argument('--save-txt', action='store_true', help='save results to *.txt')
+    parser.add_argument('--compare', default=True, help='compare with ground truth')
     parser.add_argument('--plot-compare', action='store_true', help='plot_compare')
 
     parser.add_argument('--imgsz', '--img', '--img-size', type=int, default=640, help='inference size (pixels)')
@@ -389,7 +377,7 @@ def parse_opt():
 
 
 def main(opt):
-    check_requirements(exclude=('tensorboard', 'thop'))
+    # check_requirements(exclude=('tensorboard', 'thop'))
 
     if opt.task in ('train', 'val', 'test'):  # run normally
         if opt.conf_thres > 0.001:  # https://github.com/ultralytics/yolov5/issues/1466

@@ -1,8 +1,10 @@
 python val.py  \
---project 'runs/car_person/yolov5s/val' \
---data data/car_person.yaml  \
---weights '/hdd/files/test.engine'  \
---batch-size 1  \
+--project 'runs/fabric/yolov5s/val' \
+--data data/fabric.yaml  \
+--weights runs/fabric/best.pt  \
+--task test     \
+--device 0 \
+--batch-size 200  \
 --workers 8 
 
 # iou=0.1

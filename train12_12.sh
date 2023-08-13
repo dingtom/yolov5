@@ -1,15 +1,15 @@
 python -m torch.distributed.launch --nproc_per_node 4 --use_env train.py \
 --amp  \
 --project runs/fabric/yolov5s/train \
---cfg models/yolov5m.yaml \
---device 0,1,2,3 \
---imgsz 1920  \
+--cfg models/yolov5m.yaml            \
+--device 0,1,2,3      \
+--imgsz 640            \
 --data data/fabric.yaml \
---batch-size 12 \
---workers 32 \
+--batch-size 128         \
+--workers 32  \
 --epochs  500 \
 --patience 50  \
---weights runs/fabric/yolov5s/train/exp19/weights/best.pt  \
+--weights runs/fabric/yolov5s/train/exp3/weights/best.pt  \
 #--resume    \
 
 #--cache           \
