@@ -2,15 +2,16 @@ python -m torch.distributed.launch --nproc_per_node 4 --use_env train.py \
 --amp  \
 --device 0,1,2,3 \
 --weights yolov5s.pt  \
---project runs/seaship/coorattention/train \
---cfg models/coorattention.yaml \
+--project runs/seaship/cbamattention1/train \
+--cfg models/cbamattention1.yaml \
 --hyp data/hyps/hyp.scratch-low.yaml  \
 --imgsz 640  \
 --data data/seaship.yaml \
---batch-size 248 \
+--batch-size 128 \
 --workers 32 \
---epochs 200 \
---cache       \
+--epochs 200  \
+--patience 50  \
+--cache         \
 #--resume
 
 

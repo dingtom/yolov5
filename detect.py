@@ -214,15 +214,9 @@ def run(
 
 def parse_opt():
     parser = argparse.ArgumentParser()
-    # parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'yolov5s.pt', help='model path or triton URL')
-    # parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'runs/train/exp5/weights/best.pt', help='model path(s)')
     parser.add_argument('--weights', nargs='+', type=str, default=ROOT / r'data/hand/original/train/exp/weights/best.pt', help='model path(s)')
     parser.add_argument('--project', default=ROOT / 'runs/detect', help='save results to project/name')
-
-    # parser.add_argument('--source', type=str, default='', help='file/dir/URL/glob/screen/0(webcam)')
     parser.add_argument('--source', type=str, default=r'D:\data\hand_small\test', help='file/dir/URL/glob, 0 for webcam')
-    # parser.add_argument('--data', type=str, default=ROOT / 'data/coco128.yaml', help='dataset.yaml path')
-
     parser.add_argument('--data', type=str, default=ROOT / 'data/hand.yaml', help='(optional) dataset.yaml path')
     parser.add_argument('--imgsz', '--img', '--img-size', nargs='+', type=int, default=[640], help='inference size h,w')
     parser.add_argument('--conf-thres', type=float, default=0.25, help='confidence threshold')
@@ -256,7 +250,7 @@ def parse_opt():
 
 
 def main(opt):
-    check_requirements(exclude=('tensorboard', 'thop'))
+    # check_requirements(exclude=('tensorboard', 'thop'))
     run(**vars(opt))
 
 
